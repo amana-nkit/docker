@@ -51,5 +51,50 @@ HOME_URL="https://centos.org/"
 BUG_REPORT_URL="https://bugs.centos.org/"
 CENTOS_MANTISBT_PROJECT="CentOS-8"
 CENTOS_MANTISBT_PROJECT_VERSION="8"
+root@AZ-VM001:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS     NAMES
+9e6be2778cc0   centos    "/bin/bash"              2 minutes ago    Up 2 minutes              frosty_wilson
+53c0bf561d1e   centos    "/bin/bash"              3 minutes ago    Up 3 minutes              intelligent_hellman
+2882d9dad69c   centos    "/bin/bash"              3 minutes ago    Up 3 minutes              romantic_yalow
+a81592b7352e   centos    "/bin/bash"              6 minutes ago    Up 6 minutes              hungry_leakey
+cb5bac3e004c   nginx     "/docker-entrypoint.…"   19 minutes ago   Up 19 minutes   80/tcp    kind_pike
+root@AZ-VM001:~# docker run -d --name aman nginx
+4798713f101860529d6306ff198b5ddbce8e1574a88c5f26870587a284a01394
+
 [root@a81592b7352e /]# yum install httpd
+CONTAINER ID   IMAGE     COMMAND                  CREATED             STATUS             PORTS     NAMES
+4798713f1018   nginx     "/docker-entrypoint.…"   14 seconds ago      Up 12 seconds      80/tcp    aman
+9e6be2778cc0   centos    "/bin/bash"              About an hour ago   Up About an hour             frosty_wilson
+53c0bf561d1e   centos    "/bin/bash"              About an hour ago   Up About an hour             intelligent_hellman
+2882d9dad69c   centos    "/bin/bash"              About an hour ago   Up About an hour             romantic_yalow
+a81592b7352e   centos    "/bin/bash"              About an hour ago   Up About an hour             hungry_leakey
+cb5bac3e004c   nginx     "/docker-entrypoint.…"   About an hour ago   Up About an hour   80/tcp    kind_pike
+root@AZ-VM001:~# docker stop cb5bac3e004c
+cb5bac3e004c
+root@AZ-VM001:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED             STATUS             PORTS     NAMES
+4798713f1018   nginx     "/docker-entrypoint.…"   2 minutes ago       Up 2 minutes       80/tcp    aman
+9e6be2778cc0   centos    "/bin/bash"              About an hour ago   Up About an hour             frosty_wilson
+53c0bf561d1e   centos    "/bin/bash"              About an hour ago   Up About an hour             intelligent_hellman
+2882d9dad69c   centos    "/bin/bash"              About an hour ago   Up About an hour             romantic_yalow
+a81592b7352e   centos    "/bin/bash"              About an hour ago   Up About an hour             hungry_leakey
+root@AZ-VM001:~# docker start cb5bac3e004c
+cb5bac3e004c
+root@AZ-VM001:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED             STATUS             PORTS     NAMES
+4798713f1018   nginx     "/docker-entrypoint.…"   2 minutes ago       Up 2 minutes       80/tcp    aman
+9e6be2778cc0   centos    "/bin/bash"              About an hour ago   Up About an hour             frosty_wilson
+53c0bf561d1e   centos    "/bin/bash"              About an hour ago   Up About an hour             intelligent_hellman
+2882d9dad69c   centos    "/bin/bash"              About an hour ago   Up About an hour             romantic_yalow
+a81592b7352e   centos    "/bin/bash"              About an hour ago   Up About an hour             hungry_leakey
+cb5bac3e004c   nginx     "/docker-entrypoint.…"   About an hour ago   Up 6 seconds       80/tcp    kind_pike
+root@AZ-VM001:~# docker rm -f cb5bac3e004c
+cb5bac3e004c
+root@AZ-VM001:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED             STATUS             PORTS     NAMES
+4798713f1018   nginx     "/docker-entrypoint.…"   3 minutes ago       Up 3 minutes       80/tcp    aman
+9e6be2778cc0   centos    "/bin/bash"              About an hour ago   Up About an hour             frosty_wilson
+53c0bf561d1e   centos    "/bin/bash"              About an hour ago   Up About an hour             intelligent_hellman
+2882d9dad69c   centos    "/bin/bash"              About an hour ago   Up About an hour             romantic_yalow
+a81592b7352e   centos    "/bin/bash"              About an hour ago   Up About an hour             hungry_leakey
 
