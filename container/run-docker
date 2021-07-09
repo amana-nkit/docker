@@ -378,4 +378,13 @@ root@AZ-VM001:~# docker logs c2bf7cc1a9bf
 2021/07/09 21:19:55 [notice] 1#1: start worker processes
 2021/07/09 21:19:55 [notice] 1#1: start worker process 31
 2021/07/09 21:19:55 [notice] 1#1: start worker process 32
+root@AZ-VM001:~# docker stats --no-stream
+CONTAINER ID   NAME                    CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O     PIDS
+c2bf7cc1a9bf   determined_elbakyan     0.00%     4.074MiB / 3.844GiB   0.10%     1.01kB / 0B       0B / 8.19kB   4
+984a7dea117d   suspicious_heisenberg   0.00%     3.391MiB / 3.844GiB   0.09%     1.01kB / 0B       0B / 8.19kB   3
+4798713f1018   aman                    0.00%     3.434MiB / 3.844GiB   0.09%     1.7kB / 1.27kB    0B / 8.19kB   3
+9e6be2778cc0   frosty_wilson           0.00%     1.461MiB / 3.844GiB   0.04%     1.26kB / 0B       0B / 0B       1
+53c0bf561d1e   intelligent_hellman     0.00%     1.551MiB / 3.844GiB   0.04%     1.26kB / 0B       0B / 0B       1
+2882d9dad69c   romantic_yalow          0.00%     1.586MiB / 3.844GiB   0.04%     1.26kB / 0B       0B / 0B       1
+a81592b7352e   hungry_leakey           0.00%     36.98MiB / 3.844GiB   0.94%     14.8MB / 85.5kB   0B / 21.1MB   1
 
