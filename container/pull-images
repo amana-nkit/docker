@@ -1,0 +1,82 @@
+aman@AZ-VM001:~$ sudo su -
+root@AZ-VM001:~# docker search mysql
+NAME                              DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
+mysql                             MySQL is a widely used, open-source relation…   11104     [OK]
+mariadb                           MariaDB Server is a high performing open sou…   4209      [OK]
+mysql/mysql-server                Optimized MySQL Server Docker images. Create…   824                  [OK]
+centos/mysql-57-centos7           MySQL 5.7 SQL database server                   88
+mysql/mysql-cluster               Experimental MySQL Cluster Docker images. Cr…   88
+centurylink/mysql                 Image containing mysql. Optimized to be link…   59                   [OK]
+databack/mysql-backup             Back up mysql databases to... anywhere!         44
+deitch/mysql-backup               REPLACED! Please use http://hub.docker.com/r…   41                   [OK]
+prom/mysqld-exporter                                                              39                   [OK]
+tutum/mysql                       Base docker image to run a MySQL database se…   35
+linuxserver/mysql                 A Mysql container, brought to you by LinuxSe…   30
+schickling/mysql-backup-s3        Backup MySQL to S3 (supports periodic backup…   29                   [OK]
+mysql/mysql-router                MySQL Router provides transparent routing be…   21
+centos/mysql-56-centos7           MySQL 5.6 SQL database server                   20
+arey/mysql-client                 Run a MySQL client from a docker container      17                   [OK]
+fradelg/mysql-cron-backup         MySQL/MariaDB database backup using cron tas…   15                   [OK]
+genschsa/mysql-employees          MySQL Employee Sample Database                  7                    [OK]
+yloeffler/mysql-backup            This image runs mysqldump to backup data usi…   7                    [OK]
+openshift/mysql-55-centos7        DEPRECATED: A Centos7 based MySQL v5.5 image…   6
+devilbox/mysql                    Retagged MySQL, MariaDB and PerconaDB offici…   3
+ansibleplaybookbundle/mysql-apb   An APB which deploys RHSCL MySQL                2                    [OK]
+jelastic/mysql                    An image of the MySQL database server mainta…   1
+widdpim/mysql-client              Dockerized MySQL Client (5.7) including Curl…   1                    [OK]
+vitess/mysqlctld                  vitess/mysqlctld                                1                    [OK]
+centos/mysql-80-centos7           MySQL 8.0 SQL database server                   1
+root@AZ-VM001:~# docker pull alpine
+Using default tag: latest
+latest: Pulling from library/alpine
+5843afab3874: Pull complete
+Digest: sha256:234cb88d3020898631af0ccbbcca9a66ae7306ecd30c9720690858c1b007d2a0
+Status: Downloaded newer image for alpine:latest
+docker.io/library/alpine:latest
+root@AZ-VM001:~# docker pull nginx
+Using default tag: latest
+latest: Pulling from library/nginx
+b4d181a07f80: Pull complete
+66b1c490df3f: Pull complete
+d0f91ae9b44c: Pull complete
+baf987068537: Pull complete
+6bbc76cbebeb: Pull complete
+32b766478bc2: Pull complete
+Digest: sha256:8df46d7414eda82c2a8c9c50926545293811ae59f977825845dda7d558b4125b
+Status: Downloaded newer image for nginx:latest
+docker.io/library/nginx:latest
+root@AZ-VM001:~# docker pull mysql/mysql-cluster
+Using default tag: latest
+latest: Pulling from mysql/mysql-cluster
+ee9d4d67fb68: Pull complete
+42ecb36baf54: Pull complete
+d7e1acda3b44: Pull complete
+d935d8e6c985: Pull complete
+29452ba5cf5d: Pull complete
+2b63c198b38d: Pull complete
+c6218f91146c: Pull complete
+f93c3040c72d: Pull complete
+6b9186514bc8: Pull complete
+Digest: sha256:a8ae8a4358f0c2f07aa39df046eb81e8f88cb2bebcaaf436c67663b300a1e1fe
+Status: Downloaded newer image for mysql/mysql-cluster:latest
+docker.io/mysql/mysql-cluster:latest
+root@AZ-VM001:~# docker pull nginx:1.21.1
+1.21.1: Pulling from library/nginx
+Digest: sha256:8df46d7414eda82c2a8c9c50926545293811ae59f977825845dda7d558b4125b
+Status: Downloaded newer image for nginx:1.21.1
+docker.io/library/nginx:1.21.1
+root@AZ-VM001:~# docker pull centos
+Using default tag: latest
+latest: Pulling from library/centos
+7a0437f04f83: Pull complete
+Digest: sha256:5528e8b1b1719d34604c87e11dcd1c0a20bedf46e83b5632cdeac91b8c04efc1
+Status: Downloaded newer image for centos:latest
+docker.io/library/centos:latest
+root@AZ-VM001:~# docker images
+REPOSITORY            TAG       IMAGE ID       CREATED        SIZE
+nginx                 1.21.1    4cdc5dd7eaad   3 days ago     133MB
+nginx                 latest    4cdc5dd7eaad   3 days ago     133MB
+alpine                latest    d4ff818577bc   3 weeks ago    5.59MB
+mysql/mysql-cluster   latest    21b2688ef8f7   8 weeks ago    461MB
+hello-world           latest    d1165f221234   4 months ago   13.3kB
+centos                latest    300e315adb2f   7 months ago   209MB
