@@ -1,0 +1,103 @@
+To create images:-
+1. Select the base image
+2. Run it as container in interactive mode, enter into it
+3. Make changes
+4. Convert into new IMAGE
+
+root@AZ-VM001:~# docker ps -aq [List of conatiner ID's]
+c2bf7cc1a9bf
+984a7dea117d
+4798713f1018
+9e6be2778cc0
+53c0bf561d1e
+2882d9dad69c
+a81592b7352e
+c5b19341e919
+5aba3b583558
+352a439ff4ee
+310d7b126321
+ca266104b472
+2b1e1e9ec18a
+
+root@AZ-VM001:~# docker rm -f `docker ps -aq` [deletes all conatiners of system]
+c2bf7cc1a9bf
+984a7dea117d
+4798713f1018
+9e6be2778cc0
+53c0bf561d1e
+2882d9dad69c
+a81592b7352e
+c5b19341e919
+5aba3b583558
+352a439ff4ee
+310d7b126321
+ca266104b472
+2b1e1e9ec18a
+
+root@AZ-VM001:~# docker pull ubuntu:16.04
+16.04: Pulling from library/ubuntu
+61e03ba1d414: Pull complete
+4afb39f216bd: Pull complete
+e489abdc9f90: Pull complete
+999fff7bcc24: Pull complete
+Digest: sha256:6aab78d1825b4c15c159fecc62b8eef4fdf0c693a15aace3a605ad44e5e2df0c
+Status: Downloaded newer image for ubuntu:16.04
+docker.io/library/ubuntu:16.04
+
+root@AZ-VM001:~# docker run -it ubuntu:16.04
+root@b846927667f7:/# apt-get update
+root@b846927667f7:/# apt-get install -y  nginx vim [Install nginx in Ubuntu VM and VIM Editor]
+root@AZ-VM001:~# docker ps
+CONTAINER ID   IMAGE          COMMAND       CREATED          STATUS          PORTS     NAMES
+b846927667f7   ubuntu:16.04   "/bin/bash"   23 minutes ago   Up 23 minutes             quirky_hoover
+root@AZ-VM001:~# docker commit -m "nginx on ubuntu" b846927667f7 amannginx:v1 [Create new image with existing]
+sha256:bf9d79d65e3a6030c7aac546ea6141aece5391490c475b8e2b156a63f4c72eed
+root@AZ-VM001:~# docker images
+REPOSITORY            TAG       IMAGE ID       CREATED          SIZE
+amannginx             v1        bf9d79d65e3a   13 seconds ago   275MB
+nginx                 1.21.1    4cdc5dd7eaad   6 days ago       133MB
+nginx                 latest    4cdc5dd7eaad   6 days ago       133MB
+mysql                 latest    5c62e459e087   2 weeks ago      556MB
+ubuntu                16.04     065cf14a189c   3 weeks ago      135MB
+alpine                latest    d4ff818577bc   3 weeks ago      5.59MB
+mysql/mysql-cluster   latest    21b2688ef8f7   2 months ago     461MB
+hello-world           latest    d1165f221234   4 months ago     13.3kB
+centos                latest    300e315adb2f   7 months ago     209MB
+
+root@AZ-VM001:~# docker run -d -P amannginx:v1
+0d768aa87f994174a5809a21c1f1be399c1a81da10a098fa1dafebe2d3d0b61e
+root@AZ-VM001:~# docker ps
+CONTAINER ID   IMAGE          COMMAND       CREATED          STATUS          PORTS     NAMES
+b846927667f7   ubuntu:16.04   "/bin/bash"   26 minutes ago   Up 26 minutes             quirky_hoover
+root@AZ-VM001:~# docker ps -a
+CONTAINER ID   IMAGE          COMMAND       CREATED          STATUS                      PORTS     NAMES
+0d768aa87f99   amannginx:v1   "/bin/bash"   41 seconds ago   Exited (0) 39 seconds ago             kind_volhard
+b846927667f7   ubuntu:16.04   "/bin/bash"   27 minutes ago   Up 27 minutes                         quirky_hoover
+
+root@AZ-VM001:~# docker commit -m "nginx with ubuntu" -c 'CMD /usr/sbin/nginx -g "daemon off;"' -c  'EXPOSE 80' b846927667f7 amannginx:v2 [Expose command and port after container starts]
+sha256:2d8680a9250aae6a2fe8a7e14d869d90d5bbb5c13c0216cf3c168149a9d04391
+root@AZ-VM001:~# docker images
+REPOSITORY            TAG       IMAGE ID       CREATED          SIZE
+amannginx             v2        2d8680a9250a   14 seconds ago   275MB
+amannginx             v1        bf9d79d65e3a   9 minutes ago    275MB
+nginx                 1.21.1    4cdc5dd7eaad   6 days ago       133MB
+nginx                 latest    4cdc5dd7eaad   6 days ago       133MB
+mysql                 latest    5c62e459e087   2 weeks ago      556MB
+ubuntu                16.04     065cf14a189c   3 weeks ago      135MB
+alpine                latest    d4ff818577bc   3 weeks ago      5.59MB
+mysql/mysql-cluster   latest    21b2688ef8f7   2 months ago     461MB
+hello-world           latest    d1165f221234   4 months ago     13.3kB
+centos                latest    300e315adb2f   7 months ago     209MB
+
+root@AZ-VM001:~# docker run -d -P amannginx:v2
+a2506b04b687f7fc68bbf3c35730d19592997470106c20cc2d7d88bfa2666c8a
+root@AZ-VM001:~# docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS                                     NAMES
+a2506b04b687   amannginx:v2   "/bin/sh -c '/usr/sb…"   8 seconds ago    Up 6 seconds    0.0.0.0:49153->80/tcp, :::49153->80/tcp   intelligent_kalam
+b846927667f7   ubuntu:16.04   "/bin/bash"              36 minutes ago   Up 36 minutes                                             quirky_hoover
+
+
+
+
+
+
