@@ -79,3 +79,11 @@ updating container network
 	2) on-failure: only if the container fails (exits with non-zero exit code)
 	3) always: Always restart the container whether it succeeds or fails. Also start the container automatically on  daemon startup
 	4) unless-stopped: Always restart the container whether it succeeds or fails, and the daemon startup, unless the container was manually stopeed
+	
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+docker image prune [Removes dangling images, Images without name]
+docker image prune -a [Removes all images with atleast one container associated to them] 
+docker rm -f `docker ps -aq` [Removes all containers]
+docker history myapp:v1 [Shows history of all layers in myapp]
+
