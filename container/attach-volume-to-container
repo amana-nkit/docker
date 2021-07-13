@@ -1,0 +1,83 @@
+root@AZ-VM001:~# docker volume ls
+DRIVER    VOLUME NAME
+local     1ba7a30f2ba7bbcace292dc468250c39a4549031b4fe9cc330f861deb88ebee7
+local     ede89ab25a166615e9f0395de0760c0985b7071866ae2ed33c73e945c8e8fd5f
+root@AZ-VM001:~# docker volume create vol1
+vol1
+root@AZ-VM001:~# docker inspect vol1
+[
+    {
+        "CreatedAt": "2021-07-13T16:21:26Z",
+        "Driver": "local",
+        "Labels": {},
+        "Mountpoint": "/var/lib/docker/volumes/vol1/_data",
+        "Name": "vol1",
+        "Options": {},
+        "Scope": "local"
+    }
+]
+root@AZ-VM001:~# docker run -d -P -v vol1:/usr/local/tomcat/logs tomcat
+Unable to find image 'tomcat:latest' locally
+latest: Pulling from library/tomcat
+0bc3020d05f1: Pull complete
+a110e5871660: Pull complete
+83d3c0fa203a: Pull complete
+a8fd09c11b02: Pull complete
+96ebf1506065: Pull complete
+b8bf70f9cc4d: Pull complete
+3f6da67b9e68: Pull complete
+257407776119: Pull complete
+7bd0a187fb92: Pull complete
+307fc4df04c9: Pull complete
+Digest: sha256:a5abf192aceed45620dbb2e09f8abdec2b96108b86365a988c85e753c28cd36b
+Status: Downloaded newer image for tomcat:latest
+4c8a289a762a63a66737daabee0ef1f08345472d6e6798af1f888a353ab507e0
+root@AZ-VM001:~# docker ps
+CONTAINER ID   IMAGE     COMMAND             CREATED          STATUS         PORTS                                         NAMES
+4c8a289a762a   tomcat    "catalina.sh run"   10 seconds ago   Up 8 seconds   0.0.0.0:49153->8080/tcp, :::49153->8080/tcp   distracted_einstein
+root@AZ-VM001:~#
+root@AZ-VM001:~# cd /var/lib/docker/volumes/vol1/_data/
+root@AZ-VM001:/var/lib/docker/volumes/vol1/_data# ls -l
+total 8
+-rw-r----- 1 root root 5123 Jul 13 16:24 catalina.2021-07-13.log
+-rw-r----- 1 root root    0 Jul 13 16:24 host-manager.2021-07-13.log
+-rw-r----- 1 root root    0 Jul 13 16:24 localhost.2021-07-13.log
+-rw-r----- 1 root root    0 Jul 13 16:24 localhost_access_log.2021-07-13.txt
+-rw-r----- 1 root root    0 Jul 13 16:24 manager.2021-07-13.log
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+root@AZ-VM001:~# docker run --name some-mysql -v vol2:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
+d85d6a3bcaebad65d84e40c7a50de3f846806630ab25917a00403a93882c6b90
+root@AZ-VM001:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                                         NAMES
+d85d6a3bcaeb   mysql     "docker-entrypoint.s…"   16 seconds ago   Up 14 seconds   3306/tcp, 33060/tcp                           some-mysql
+4c8a289a762a   tomcat    "catalina.sh run"        5 minutes ago    Up 5 minutes    0.0.0.0:49153->8080/tcp, :::49153->8080/tcp   distracted_einstein
+root@AZ-VM001:~# ls -l /var/lib/docker/volumes/vol2/_data/
+total 198064
+-rw-r----- 1 systemd-coredump systemd-coredump   196608 Jul 13 16:30 '#ib_16384_0.dblwr'
+-rw-r----- 1 systemd-coredump systemd-coredump  8585216 Jul 13 16:29 '#ib_16384_1.dblwr'
+drwxr-x--- 2 systemd-coredump systemd-coredump     4096 Jul 13 16:30 '#innodb_temp'
+-rw-r----- 1 systemd-coredump systemd-coredump       56 Jul 13 16:30  auto.cnf
+-rw-r----- 1 systemd-coredump systemd-coredump  3118706 Jul 13 16:30  binlog.000001
+-rw-r----- 1 systemd-coredump systemd-coredump      156 Jul 13 16:30  binlog.000002
+-rw-r----- 1 systemd-coredump systemd-coredump       32 Jul 13 16:30  binlog.index
+-rw------- 1 systemd-coredump systemd-coredump     1680 Jul 13 16:30  ca-key.pem
+-rw-r--r-- 1 systemd-coredump systemd-coredump     1112 Jul 13 16:30  ca.pem
+-rw-r--r-- 1 systemd-coredump systemd-coredump     1112 Jul 13 16:30  client-cert.pem
+-rw------- 1 systemd-coredump systemd-coredump     1680 Jul 13 16:30  client-key.pem
+-rw-r----- 1 systemd-coredump systemd-coredump     5449 Jul 13 16:30  ib_buffer_pool
+-rw-r----- 1 systemd-coredump systemd-coredump 50331648 Jul 13 16:30  ib_logfile0
+-rw-r----- 1 systemd-coredump systemd-coredump 50331648 Jul 13 16:29  ib_logfile1
+-rw-r----- 1 systemd-coredump systemd-coredump 12582912 Jul 13 16:30  ibdata1
+-rw-r----- 1 systemd-coredump systemd-coredump 12582912 Jul 13 16:30  ibtmp1
+drwxr-x--- 2 systemd-coredump systemd-coredump     4096 Jul 13 16:30  mysql
+-rw-r----- 1 systemd-coredump systemd-coredump 31457280 Jul 13 16:30  mysql.ibd
+drwxr-x--- 2 systemd-coredump systemd-coredump     4096 Jul 13 16:30  performance_schema
+-rw------- 1 systemd-coredump systemd-coredump     1680 Jul 13 16:30  private_key.pem
+-rw-r--r-- 1 systemd-coredump systemd-coredump      452 Jul 13 16:30  public_key.pem
+-rw-r--r-- 1 systemd-coredump systemd-coredump     1112 Jul 13 16:30  server-cert.pem
+-rw------- 1 systemd-coredump systemd-coredump     1680 Jul 13 16:30  server-key.pem
+drwxr-x--- 2 systemd-coredump systemd-coredump     4096 Jul 13 16:30  sys
+-rw-r----- 1 systemd-coredump systemd-coredump 16777216 Jul 13 16:30  undo_001
+-rw-r----- 1 systemd-coredump systemd-coredump 16777216 Jul 13 16:30  undo_002
+
