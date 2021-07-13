@@ -1,0 +1,7 @@
+root@AZ-VM001:~/docker/container/images# ls
+Instruction.txt  code  dockerfile_apache2  dockerfile_myapp  dockerfile_mypyapp  dockerfile_nginx1  dockerfile_nginx2  dockerfile_tomcat
+root@AZ-VM001:~/docker/container/images# cd code
+root@AZ-VM001:~/docker/container/images/code# pwd
+/root/docker/container/images/code
+root@AZ-VM001:~/docker/container/images/code# cd ..
+root@AZ-VM001:~/docker/container/images# docker build -t myapp:v1 -f dockerfile_myapp /root/docker/container/images/code
