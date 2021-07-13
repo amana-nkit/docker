@@ -1,0 +1,39 @@
+login to dockerhub (hub.docker.com)
+create a repository in docker hub
+
+root@AZ-VM001:~# docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: amanankit
+Password:
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+root@AZ-VM001:~# docker tag myapp:v1 amanankit/myapp:v1
+root@AZ-VM001:~# docker images
+REPOSITORY            TAG       IMAGE ID       CREATED          SIZE
+myapp                 v1        08f7cbd115d8   17 minutes ago   578MB
+amanankit/myapp       v1        08f7cbd115d8   17 minutes ago   578MB
+auto                  v1        f9e6e7ab845b   16 hours ago     275MB
+amannginx             v2        2d8680a9250a   16 hours ago     275MB
+amannginx             v1        bf9d79d65e3a   17 hours ago     275MB
+nginx                 1.21.1    4cdc5dd7eaad   6 days ago       133MB
+nginx                 latest    4cdc5dd7eaad   6 days ago       133MB
+mysql                 latest    5c62e459e087   2 weeks ago      556MB
+ubuntu                16.04     065cf14a189c   3 weeks ago      135MB
+ubuntu                latest    9873176a8ff5   3 weeks ago      72.7MB
+alpine                latest    d4ff818577bc   3 weeks ago      5.59MB
+mysql/mysql-cluster   latest    21b2688ef8f7   2 months ago     461MB
+hello-world           latest    d1165f221234   4 months ago     13.3kB
+centos                latest    300e315adb2f   7 months ago     209MB
+root@AZ-VM001:~# docker push amanankit/myapp:v1
+The push refers to repository [docker.io/amanankit/myapp]
+96bde2bfc617: Pushed
+7eb4592fed6d: Pushed
+a2ed38d8b4c0: Pushed
+43c53a189708: Pushed
+fbcb7d6b1499: Pushed
+e1312d825779: Pushed
+feef05f055c9: Mounted from library/ubuntu
+v1: digest: sha256:1afce5c00c0a1aac8d5dede1be669eb96420886e320aeecb1a46444c53e50c4f size: 1790
