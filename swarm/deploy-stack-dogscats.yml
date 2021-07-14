@@ -1,0 +1,31 @@
+root@AZ-VM001:~# vi app.yml
+root@AZ-VM001:~# docker stack deploy -c app.yml myapp
+Creating network myapp_frontend
+Creating network myapp_backend
+Creating network myapp_default
+Creating service myapp_redis
+Creating service myapp_db
+Creating service myapp_vote
+Creating service myapp_result
+Creating service myapp_worker
+Creating service myapp_visualizer
+root@AZ-VM001:~# docker stack ls
+NAME      SERVICES   ORCHESTRATOR
+myapp     6          Swarm
+root@AZ-VM001:~# docker stack services myapp
+ID             NAME               MODE         REPLICAS   IMAGE                                          PORTS
+7n5k8uqjph9f   myapp_db           replicated   0/1        postgres:9.4
+mqlb9nv29dv2   myapp_redis        replicated   0/1        redis:alpine
+rahwr8ek16ew   myapp_result       replicated   0/1        dockersamples/examplevotingapp_result:before   *:5001->80/tcp
+hsq6aa5k6qsv   myapp_visualizer   replicated   0/1        dockersamples/visualizer:stable                *:8080->8080/tcp
+hkspou6r0245   myapp_vote         replicated   2/2        dockersamples/examplevotingapp_vote:before     *:5000->80/tcp
+ilr4zhr98tnv   myapp_worker       replicated   0/1        dockersamples/examplevotingapp_worker:latest
+root@AZ-VM001:~# docker service ls
+ID             NAME               MODE         REPLICAS   IMAGE                                          PORTS
+7n5k8uqjph9f   myapp_db           replicated   0/1        postgres:9.4
+mqlb9nv29dv2   myapp_redis        replicated   0/1        redis:alpine
+rahwr8ek16ew   myapp_result       replicated   0/1        dockersamples/examplevotingapp_result:before   *:5001->80/tcp
+hsq6aa5k6qsv   myapp_visualizer   replicated   0/1        dockersamples/visualizer:stable                *:8080->8080/tcp
+hkspou6r0245   myapp_vote         replicated   2/2        dockersamples/examplevotingapp_vote:before     *:5000->80/tcp
+ilr4zhr98tnv   myapp_worker       replicated   0/1        dockersamples/examplevotingapp_worker:latest
+lv8h6c4h6mq4   svc1               replicated   5/5        nginx:latest                                   *:1234->80/tcp
