@@ -1,0 +1,51 @@
+root@AZ-VM001:~# docker swarm init
+Swarm initialized: current node (7bplj5xjev9kv44bq48rl6iw3) is now a manager.
+
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-10vhlgv24scnf1z2zvipn5qug8u9ugbuaw21zao6tbv7p95z3e-9n6eycqp4lfi47uh5mjmxa3pd 10.0.0.4:2377
+
+To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+
+root@AZ-VM001:~# docker node ls
+ID                            HOSTNAME   STATUS    AVAILABILITY   MANAGER STATUS   ENGINE VERSION
+7bplj5xjev9kv44bq48rl6iw3 *   AZ-VM001   Ready     Active         Leader           20.10.7
+ugj2rfmjgwdi8wbi56mwtuxbb     AZ-VM002   Ready     Active                          20.10.2
+og8rsx4zwh4kumepgrai0oaa1     AZ-VM003   Ready     Active                          20.10.2
+
+root@AZ-VM001:~# docker service create --name svc1 --replicas 5 -p 1234:80 nginx
+lv8h6c4h6mq4s65xhkhuvbdrc
+overall progress: 5 out of 5 tasks
+1/5: running   [==================================================>]
+2/5: running   [==================================================>]
+3/5: running   [==================================================>]
+4/5: running   [==================================================>]
+5/5: running   [==================================================>]
+verify: Service converged
+root@AZ-VM001:~# docker service ls
+ID             NAME      MODE         REPLICAS   IMAGE          PORTS
+lv8h6c4h6mq4   svc1      replicated   5/5        nginx:latest   *:1234->80/tcp
+root@AZ-VM001:~# docker service ps svc1
+ID             NAME      IMAGE          NODE       DESIRED STATE   CURRENT STATE            ERROR     PORTS
+pfqfeagadjpa   svc1.1    nginx:latest   AZ-VM003   Running         Running 37 seconds ago
+lm11ae93bgip   svc1.2    nginx:latest   AZ-VM002   Running         Running 38 seconds ago
+ux64m597d35a   svc1.3    nginx:latest   AZ-VM001   Running         Running 44 seconds ago
+loeovb7z8p71   svc1.4    nginx:latest   AZ-VM003   Running         Running 37 seconds ago
+u4fye438pdrv   svc1.5    nginx:latest   AZ-VM002   Running         Running 38 seconds ago
+root@AZ-VM001:~# docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS                                         NAMES
+5c123835be83   nginx:latest   "/docker-entrypoint.…"   2 minutes ago    Up 2 minutes    80/tcp                                        svc1.3.ux64m597d35avghj030lig9ec
+cb90d919d1fa   nginx          "/docker-entrypoint.…"   24 minutes ago   Up 24 minutes   0.0.0.0:49157->80/tcp, :::49157->80/tcp       root_webserver_1
+0c8453f5e5c5   tomcat         "catalina.sh run"        24 minutes ago   Up 24 minutes   0.0.0.0:49158->8080/tcp, :::49158->8080/tcp   root_appserver_1
+cd455097d47c   nginx          "/docker-entrypoint.…"   24 minutes ago   Up 24 minutes   0.0.0.0:49156->80/tcp, :::49156->80/tcp       root_webserver_3
+14aad6bf2c01   tomcat         "catalina.sh run"        24 minutes ago   Up 24 minutes   0.0.0.0:49155->8080/tcp, :::49155->8080/tcp   root_appserver_2
+59abb3b4fca6   nginx          "/docker-entrypoint.…"   24 minutes ago   Up 24 minutes   0.0.0.0:49159->80/tcp, :::49159->80/tcp       root_webserver_2
+root@AZ-VM001:~# docker rm -f cb90d919d1fa
+cb90d919d1fa
+root@AZ-VM001:~# docker service ps svc1
+ID             NAME      IMAGE          NODE       DESIRED STATE   CURRENT STATE           ERROR     PORTS
+pfqfeagadjpa   svc1.1    nginx:latest   AZ-VM003   Running         Running 2 minutes ago
+lm11ae93bgip   svc1.2    nginx:latest   AZ-VM002   Running         Running 2 minutes ago
+ux64m597d35a   svc1.3    nginx:latest   AZ-VM001   Running         Running 2 minutes ago
+loeovb7z8p71   svc1.4    nginx:latest   AZ-VM003   Running         Running 2 minutes ago
+u4fye438pdrv   svc1.5    nginx:latest   AZ-VM002   Running         Running 2 minutes ago
