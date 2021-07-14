@@ -1,0 +1,48 @@
+aman@AZ-VM001:~$ docker-compose -v
+docker-compose version 1.23.2, build 1110ad01
+
+root@AZ-VM001:~# vi docker-compose.yml
+root@AZ-VM001:~# cat docker-compose.yml
+version: '3'
+services:
+  webserver:
+       image: nginx
+       ports:
+        - "80"
+       network_mode: bridge
+  appserver:
+       image: tomcat
+       ports:
+        - "8080"
+       network_mode: bridge
+
+root@AZ-VM001:~# docker-compose up -d
+Creating root_appserver_1 ... done
+Creating root_webserver_1 ... done
+root@AZ-VM001:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS                                         NAMES
+0e9d830080e5   tomcat    "catalina.sh run"        2 minutes ago   Up 2 minutes   0.0.0.0:49154->8080/tcp, :::49154->8080/tcp   root_appserver_1
+c8c5329ccd2e   nginx     "/docker-entrypoint.…"   2 minutes ago   Up 2 minutes   0.0.0.0:49153->80/tcp, :::49153->80/tcp       root_webserver_1
+root@AZ-VM001:~# docker-compose down
+Stopping root_appserver_1 ... done
+Stopping root_webserver_1 ... done
+Removing root_appserver_1 ... done
+Removing root_webserver_1 ... done
+
+root@AZ-VM001:~# docker-compose up -d --scale webserver=3 --scale appserver=2
+Creating root_webserver_1 ... done
+Creating root_webserver_2 ... done
+Creating root_webserver_3 ... done
+Creating root_appserver_1 ... done
+Creating root_appserver_2 ... done
+
+root@AZ-VM001:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                                         NAMES
+cb90d919d1fa   nginx     "/docker-entrypoint.…"   25 seconds ago   Up 21 seconds   0.0.0.0:49157->80/tcp, :::49157->80/tcp       root_webserver_1
+0c8453f5e5c5   tomcat    "catalina.sh run"        25 seconds ago   Up 21 seconds   0.0.0.0:49158->8080/tcp, :::49158->8080/tcp   root_appserver_1
+cd455097d47c   nginx     "/docker-entrypoint.…"   25 seconds ago   Up 21 seconds   0.0.0.0:49156->80/tcp, :::49156->80/tcp       root_webserver_3
+14aad6bf2c01   tomcat    "catalina.sh run"        25 seconds ago   Up 21 seconds   0.0.0.0:49155->8080/tcp, :::49155->8080/tcp   root_appserver_2
+59abb3b4fca6   nginx     "/docker-entrypoint.…"   25 seconds ago   Up 21 seconds   0.0.0.0:49159->80/tcp, :::49159->80/tcp       root_webserver_2
+
+
+
